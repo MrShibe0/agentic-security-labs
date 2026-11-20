@@ -1,0 +1,19 @@
+﻿# Secrets & environment variables
+.env
+.env.*
+*.key
+*.pem
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+
+# Lab artifacts & local logs (never commit raw target dumps)
+*.pcap
+*.log
+docker-volumes/
+raw-dumps/
+.DS_Store
