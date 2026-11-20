@@ -1,0 +1,20 @@
+﻿--- a/classes/class-uagb-popup.php
++++ b/classes/class-uagb-popup.php
+@@ -42,6 +42,24 @@ class UAGB_Popup {
++    public static function restrict_popup_rest_access( $result ) {
++        if ( is_wp_error( $result ) ) {
++            return $result;
++        }
++        $route = isset( $_SERVER['REQUEST_URI'] ) ? sanitize_text_field( wp_unslash( $_SERVER['REQUEST_URI'] ) ) : '';
++        if ( false === strpos( $route, '/wp/v2/spectra-popup' ) ) {
++            return $result;
++        }
++        if ( is_user_logged_in() && current_user_can( 'manage_options' ) ) {
++            return $result;
++        }
++        return new WP_Error(
++            'rest_forbidden',
++            __( 'Sorry, you are not allowed to access popups.', 'ultimate-addons-for-gutenberg' ),
++            array( 'status' => rest_authorization_required_code() )
++        );
++    }
